@@ -2,9 +2,8 @@ import random
 from time import sleep
 naipes = ['Copas', 'Ouros', 'Paus', 'Espadas']
 faces = ['As', '2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K']
-sorted_naipe = random.randint(0,3)
-sorted_face = random.randint(0,12)
 cont_played = 0
+already_sorted = []
 print("Bem vindo ao meu jogo de adivinhação de cartas!")
 sleep(0.5)
 print("""As regras são as seguintes:
@@ -18,11 +17,13 @@ while answer == "S" or answer == "SIM":
         print("Bem vindo novamente ao meu jogo de adivinhação de cartas!")
         print("Para você não esquecer irei repetir as regras!")
         sleep(1)
-        print("""As regras são as seguintes:
-        Você pode tentar até conseguir acertar.
-        Escreva os nomes de faces e naipes corretamente.
-        E principalmente, se divirta e boa sorte!""")
+        print("""As regras são as seguintes:\nVocê pode tentar até conseguir acertar.\nEscreva os nomes de faces e naipes corretamente.\nE principalmente, se divirta e boa sorte!""")
         sleep(1)
+    sorted_naipe = random.randint(0,3)
+    sorted_face = random.randint(0,12)
+    while faces[sorted_face] + naipes[sorted_naipe] in already_sorted:
+        sorted_naipe = random.randint(0,3)
+        sorted_face = random.randint(0,12)
     print(f"Os naipes usados aqui são: {naipes}")
     print(f"As faces usadas aqui são: {faces}")
     guess_naipe = input("Informe o naipe da carta que você acha que é: ")
@@ -30,7 +31,9 @@ while answer == "S" or answer == "SIM":
     cont_plays = 1
     while True:
         if guess_naipe == naipes[sorted_naipe] and guess_face == faces[sorted_face]:
+            print(f"A carta sorteada é {faces[sorted_face]} de {naipes[sorted_naipe]}!")
             print(f"Parabéns você acertou com {cont_plays} tentativas!")
+            already_sorted.append(faces[sorted_face] + naipes[sorted_naipe])
             answer = input("Deseja jogar novamente??? S | N \n").upper()
             cont_played = 1
             break
