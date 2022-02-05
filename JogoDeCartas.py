@@ -4,12 +4,29 @@ naipes = ['Copas', 'Ouros', 'Paus', 'Espadas']
 faces = ['As', '2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K']
 cont_played = 0
 already_sorted = []
+
+def ask_face():
+    guess_face = input("Informe a face da carta que você acha que é: ").title()
+    if guess_face not in faces:
+        while guess_face not in faces:
+            print(f"Faces: {faces}")
+            guess_face = input("Informe a face do baralho que você acha que é: ").title()
+    return guess_face
+
+def ask_naipe():
+    guess_naipe = input("Informe o naipe da carta que você acha que é: ").title()
+    if guess_naipe not in naipes:
+        while guess_naipe not in naipes:
+            print(f"Naipes: {naipes}")
+            guess_naipe = input("Informe o naipe do baralho que você acha que é: ").title()
+    return guess_naipe
+
 print("Bem vindo ao meu jogo de adivinhação de cartas!")
 sleep(0.5)
 print("""As regras são as seguintes:
 Você pode tentar até conseguir acertar.
 Escreva os nomes de faces e naipes corretamente.
-E principalmente, se divirta e boa sorte!""")
+E principalmente, se divirta e boa sorte!\n\n\n""")
 sleep(1)
 answer = input("Está pronto pra jogar??? S | N \n").upper()
 while answer == "S" or answer == "SIM":
@@ -17,7 +34,10 @@ while answer == "S" or answer == "SIM":
         print("Bem vindo novamente ao meu jogo de adivinhação de cartas!")
         print("Para você não esquecer irei repetir as regras!")
         sleep(1)
-        print("""As regras são as seguintes:\nVocê pode tentar até conseguir acertar.\nEscreva os nomes de faces e naipes corretamente.\nE principalmente, se divirta e boa sorte!""")
+        print("""As regras são as seguintes:
+Você pode tentar até conseguir acertar.
+Escreva os nomes de faces e naipes corretamente.
+E principalmente, se divirta e boa sorte!\n\n\n""")
         sleep(1)
     sorted_naipe = random.randint(0,3)
     sorted_face = random.randint(0,12)
@@ -26,8 +46,8 @@ while answer == "S" or answer == "SIM":
         sorted_face = random.randint(0,12)
     print(f"Os naipes usados aqui são: {naipes}")
     print(f"As faces usadas aqui são: {faces}")
-    guess_naipe = input("Informe o naipe da carta que você acha que é: ")
-    guess_face = input("Informe a face da carta que você acha que é: ")
+    guess_naipe = ask_naipe()
+    guess_face = ask_face()
     cont_plays = 1
     while True:
         if guess_naipe == naipes[sorted_naipe] and guess_face == faces[sorted_face]:
@@ -51,16 +71,13 @@ while answer == "S" or answer == "SIM":
                 print("Você acertou o naipe da carta sorteada!")
             else:
                 print("A carta sorteada tem naipe diferente do seu chute!")
-            print("Outra chance!")
+            print("Outra chance!\n\n\n")
             cont_plays += 1
-            if guess_naipe == naipes[sorted_naipe]:
-                pass
-            else:
-                guess_naipe = input("Informe o naipe da carta que você acha que é: ")
-            if guess_face == faces[sorted_face]:
-                pass
-            else:
-                guess_face = input("Informe a face da carta que você acha que é: ")
+            if guess_naipe != naipes[sorted_naipe]:
+                guess_naipe = ask_naipe()
+            if guess_face != faces[sorted_face]:
+                guess_face = ask_face()
+                
 
             
         
